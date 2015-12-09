@@ -1,0 +1,29 @@
+{
+  "name": "nowrap",
+  "version": "0.3.0",
+  "description": "Wraps the top level functions of an object to allow before/after intercepts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine-node tests --verbose",
+    "example": "node tonic-example.js"
+  },
+  "keywords": [
+    "wrapper",
+    "proxy"
+  ],
+  "tonicExampleFilename": "tonic-example.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:kcartlidge/nowrap.git"
+  },
+  "author": "K Cartlidge",
+  "license": "MIT",
+  "dependencies": {
+    "args-list": "^0.3.3",
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "jasmine": "^2.4.1"
+  }
+}
