@@ -1,6 +1,6 @@
 {
   "name": "nowrap",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Wraps the top level functions of an object to allow before/after intercepts.",
   "main": "index.js",
   "scripts": {
