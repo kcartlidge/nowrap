@@ -1,4 +1,4 @@
-# NoWrap
+# NoWrap v0.3.2
 ## Wraps the top level functions of an object to allow before/after intercepts.
 
 [By K Cartlidge](http://www.kcartlidge.com).
@@ -12,8 +12,8 @@ A copy of the licence is within the package source.
 
 ### Current Status
 
-* Tested and fully usable.
-* Coming shortly - live parameter substitutions.
+* Tested and working.
+* Includes optional parameter substitutions.
 
 ### What Problem does it Solve?
 
@@ -47,22 +47,53 @@ Create either/both your *before* and *after* hooks:
 
 ``` javascript
 // Create a function to be called before a wrapped one.
-var beforeFunc = function(name, args) {
-	console.log("Calling '" + name + "' with ", args);
+var beforeFunc = function (name, args) {
+	console.log("Actually calling '" + name + "' with ", args);
 };
 
 // Create a function to be called after a wrapped one.
-var afterFunc = function(name, result) {
-	console.log("It returned the caller ", result);
+var afterFunc = function (name, result) {
+	console.log("The call returned:", result);
 };
 ```
+
+Create any *substitutions* required for parameters.
+Using these, you can dynamically alter what the function
+is given and so influence the result:
+
+``` javascript
+// The path goes uppercase., which means 'file' also becomes 'FILE'.
+// The ext becomes 'ORIGINAL', which then matches the input and so is removed.
+var substitutions = {
+	basename: {
+		path: function(original) {
+			return original.toUpperCase();
+		},
+		ext: '.ORIGINAL'
+	}
+};
+```
+This is an object whose top level name should be the name
+of the function for which the substitution occurs. Within
+that, the next nested name is the parameter name and the
+that contains the value to be substituted for the parameter.
+
+If the value is anything other than a function it is switched
+in unchanged. If it is a *function* it is called with the value
+that would normally be passed at this time, and is expected to
+then return a replacement for passing in instead.
+
+In the example above, when *basename.path('file.original','.ext')* is called
+then 'file.original' is changed to 'FILE.ORIGINAL' via the function and 'b' is changed
+to '.ORIGINAL' via the value substitution.
 
 Wrap the thing and use it:
 
 ``` javascript
 // Wrap the main functions and re-run.
-wrap(path, beforeFunc, afterFunc);
-var result = path.parse('/test/path');
+wrap(path, beforeFunc, afterFunc, substitutions);
+console.log("Appears to be calling 'basename' with ('/path/file.original', '.ext').");
+var result = path.basename('/path/file.original', '.ext');
 ```
 
 The args passed to the *before* function, being an associative
@@ -70,7 +101,7 @@ array, can also be accessed as so:
 
 ``` javascript
 var beforeFunc = function(name, args) {
-	console.log(args.pathString);
+	console.log(args.path);
 };
 ```
 

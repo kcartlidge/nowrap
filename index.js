@@ -2,7 +2,7 @@ var _ = require('lodash');
 var argsList = require('args-list');
 
 var wrapper = {
-	wrap: function (subject, before, after) {
+	wrap: function (subject, before, after, substitutions) {
 
 		// Wrap up each function on the subject.
 		_.each(_.functions(subject), function (func) {
@@ -20,6 +20,14 @@ var wrapper = {
 				var idx = 0;
 				_.each(params, function (param) {
 					args[param] = rawArgs[idx];
+					if (substitutions && substitutions[func] && substitutions[func][param]) {
+						var replacement = substitutions[func][param];
+						if (typeof(replacement) === 'function') {
+							replacement = replacement(args[param]);
+						}
+						args[param] = replacement;
+						rawArgs[idx] = args[param];
+					}
 					idx++;
 				});
 
@@ -29,7 +37,7 @@ var wrapper = {
 				}
 
 				// Do the original operation.
-				var result = original.apply(this, arguments);
+				var result = original.apply(this, rawArgs);
 
 				// Call any 'after' handler, passing the name and any result.
 				if (after) {
