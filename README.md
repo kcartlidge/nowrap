@@ -62,8 +62,8 @@ Using these, you can dynamically alter what the function
 is given and so influence the result:
 
 ``` javascript
-// The path goes uppercase., which means 'file' also becomes 'FILE'.
-// The ext becomes 'ORIGINAL', which then matches the input and so is removed.
+// The path goes uppercase.
+// The ext becomes '.ORIGINAL'.
 var substitutions = {
 	basename: {
 		path: function(original) {
@@ -76,15 +76,15 @@ var substitutions = {
 This is an object whose top level name should be the name
 of the function for which the substitution occurs. Within
 that, the next nested name is the parameter name and the
-that contains the value to be substituted for the parameter.
+that contains the value to be fed to the parameter.
 
-If the value is anything other than a function it is switched
+If the value is anything *other* than a function it is fed
 in unchanged. If it is a *function* it is called with the value
 that would normally be passed at this time, and is expected to
 then return a replacement for passing in instead.
 
 In the example above, when *basename.path('file.original','.ext')* is called
-then 'file.original' is changed to 'FILE.ORIGINAL' via the function and 'b' is changed
+then 'file.original' is changed to 'FILE.ORIGINAL' via the function and '.ext' is changed
 to '.ORIGINAL' via the value substitution.
 
 Wrap the thing and use it:
@@ -95,6 +95,12 @@ wrap(path, beforeFunc, afterFunc, substitutions);
 console.log("Appears to be calling 'basename' with ('/path/file.original', '.ext').");
 var result = path.basename('/path/file.original', '.ext');
 ```
+
+The output is similar to:
+
+	Appears to be calling 'basename' with ('/path/file.original', '.ext').
+	Actually calling 'basename' with  [ path: '/PATH/FILE.ORIGINAL', ext: '.ORIGINAL' ]
+	The call returned: FILE
 
 The args passed to the *before* function, being an associative
 array, can also be accessed as so:
