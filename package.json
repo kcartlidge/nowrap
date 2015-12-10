@@ -1,6 +1,6 @@
 {
   "name": "nowrap",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Wraps the top level functions of an object to allow before/after intercepts.",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "tonicExampleFilename": "tonic-example.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com:kcartlidge/nowrap.git"
+    "url": "https://github.com/kcartlidge/nowrap.git"
   },
   "author": "K Cartlidge",
   "license": "MIT",
