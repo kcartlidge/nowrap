@@ -1,5 +1,5 @@
 # NoWrap v0.3.2
-## Wraps the top level functions of an object to allow before/after intercepts.
+## Wraps the top level functions of an object to allow before/after intercepts. Supports parameter substitutions via value or function.
 
 [By K Cartlidge](http://www.kcartlidge.com).
 
