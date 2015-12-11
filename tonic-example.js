@@ -3,7 +3,7 @@
  is why it shows again following the 'after' hook.
  */
 
-var wrap = require('./index');
+var wrap = require('nowrap');
 
 // Load a module to use as an example.
 var path = require('path');
